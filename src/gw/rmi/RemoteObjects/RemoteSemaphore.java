@@ -4,13 +4,13 @@ import gw.rmi.Interfaces.IRemoteSemaphore;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.concurrent.Semaphore;
 
-public class RemoteSemaphore implements IRemoteSemaphore, Serializable {
+public class RemoteSemaphore extends UnicastRemoteObject implements IRemoteSemaphore, Serializable  {
     private final Semaphore semaphore;
 
-    RemoteSemaphore(int max_permits)
-    {
+    RemoteSemaphore(int max_permits) throws RemoteException {
         super();
         semaphore = new Semaphore(max_permits, true);
     }

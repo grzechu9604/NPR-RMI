@@ -5,9 +5,10 @@ import gw.rmi.Interfaces.IRemoteSemaphoreFactory;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 
-public class RemoteSemaphoreFactory implements IRemoteSemaphoreFactory, Serializable {
+public class RemoteSemaphoreFactory extends UnicastRemoteObject implements IRemoteSemaphoreFactory, Serializable {
 
     private HashMap<Long, RemoteSemaphore> _semaphores;
 
@@ -30,9 +31,15 @@ public class RemoteSemaphoreFactory implements IRemoteSemaphoreFactory, Serializ
         }
         else
         {
-            RemoteSemaphore semaphore = new RemoteSemaphore(max_permits);
-            _semaphores.put(id, semaphore);
-            return true;
+            RemoteSemaphore semaphore;
+            try {
+                semaphore = new RemoteSemaphore(max_permits);
+                _semaphores.put(id, semaphore);
+                return true;
+            } catch (RemoteException e) {
+                e.printStackTrace();
+                return false;
+            }
         }
     }
 }
