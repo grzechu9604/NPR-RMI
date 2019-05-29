@@ -1,0 +1,10 @@
+Projekt dotyczy zdalnego semafora ogólnego.
+Wykorzystane zostały dwa interfejsy pozwalające na wykonanie zdalnych procedur:
+a) gw.rmi.Interfaces.IRemoteSemaphoreFactory służy do:
+	utworzenia semafora CreateSemaphore (zwraca true - jeżeli udało sie utworzyć semafor, false jeżeli już taki istnieje)
+	pobrania uchwytu na semafor zdalny GetSemaphore o wskazanym ID
+b) gw.rmi.Interfaces.IRemoteSemaphore służy do wykonywania operacji na semaforze uogólnionym (acquire i release)
+
+W implementacji semafora zdalnego z klasy gw.rmi.RemoteObjects.RemoteSemaphore wykorzystany został semafor z pakietu java.util.concurrent.
+
+Aby przetestować program należy uruchomić jedną instancję klasy  gw.rmi.Main oraz kilka instancji gw.local.Main
